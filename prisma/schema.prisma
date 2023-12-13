@@ -1,0 +1,60 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id String @id @default(uuid())
+  nome String 
+  cpf String @unique
+  email String @unique
+  senha String 
+  ocorrencias Ocorrencia[]
+
+  @@map("Usuarios")
+}
+
+model Administrador {
+  id String @id @default(uuid())
+  nome String 
+  cpf String @unique
+  email String @unique
+  senha String 
+  cargo String
+
+  ocorrencias Ocorrencia[]
+
+  @@map("Administradores")
+}
+
+model Ocorrencia {
+  id String @id @default(uuid())
+  descricao String
+  tipo String
+  data DateTime
+  lat Float
+  log Float
+  status Boolean
+  administradores Administrador[]
+
+  usuarioId String 
+  usuario Usuario @relation(fields: [usuarioId], references: [id])
+
+  imagens Imagens[]
+
+  @@map("Ocorrencias")
+}
+
+model Imagens {
+  id String @id @default(uuid())
+  caminho String
+  ocorrencia Ocorrencia @relation(fields: [ocorrenciaId], references: [id])
+  ocorrenciaId String
+}
