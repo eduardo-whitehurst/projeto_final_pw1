@@ -1,0 +1,20 @@
+version: '3.9'
+
+services:
+  database:
+    image: postgres
+    container_name: pw1ts
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=pw1ts_development
+    volumes:
+      - pgdata:/data/postgres
+
+
+volumes:
+  pgdata:
+    driver: local
