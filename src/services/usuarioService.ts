@@ -1,5 +1,7 @@
 import { UsuarioDTO } from "../dtos/usuarioDto";
+import { response as res } from "express";
 import { PrismaClient } from "@prisma/client";
+import { validacaoUsuarioYup } from "../utils/validacaoUsuarioYup";
 
 const {hash} = require("bcryptjs");
 
@@ -16,9 +18,14 @@ const usuarioExiste = async (email: string) => {
 }
 
 const criarUsuario = async (usuario: UsuarioDTO) => {
+    const validacaoDeErros = await validacaoUsuarioYup(usuario);
+
+    if(validacaoDeErros){
+        return {message: [...validacaoDeErros.errors], statusCode: 400};
+    }
 
     if(await usuarioExiste(usuario.email)){
-        throw new Error('Usuario já existe no nosso sistema!');
+        return res.status(400).send("Usuário já existe no nosso sistema!");
     }
 
     try {
