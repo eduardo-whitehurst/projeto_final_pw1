@@ -34,8 +34,8 @@ const buscarUsuarioPorEmail = async (req: Request, res: Response) => {
 }
 
 const editarUsuario = async (req: Request, res: Response) => {
-    const { id, nome, cpf, senha } = req.body;
-    const { email } = req.params;
+    const { email, nome, cpf, senha } = req.body;
+    const { id } = req.params;
 
     const usuarioAtualizado = await usuarioService.editarUsuario({id, nome, cpf, senha, email: email as string});
 

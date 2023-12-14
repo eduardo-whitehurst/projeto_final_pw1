@@ -1,4 +1,4 @@
-import { OcorrenciaDTO, PostOcorrencia } from "../dtos/ocorrenciaDto";
+import { OcorrenciaDTO, PostOcorrencia, PutOcorrencia } from "../dtos/ocorrenciaDto";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -67,7 +67,7 @@ const buscarOcorrenciaPorId = async (id: string) => {
     }
 }
 
-const editarOcorrencia = async (ocorrencia: OcorrenciaDTO) => {
+const editarOcorrencia = async (ocorrencia: PutOcorrencia) => {
     try {
         const ocorrenciaAtualizada = await prisma.ocorrencia.update({
             where: {
@@ -103,7 +103,8 @@ const deletarOcorrencia = async (id: string) => {
 
         return ocorrenciaDeletada;
     } catch (error) {
-        throw new Error('Erro ao deletar uma ocorrência!');
+        console.log(error);
+        throw new Error('Erro ao deletar uma ocorrência1!');
     }
 }
 

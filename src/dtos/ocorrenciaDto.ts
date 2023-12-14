@@ -9,7 +9,7 @@ export interface OcorrenciaDTO {
     lat: number;
     long: number;
     status: boolean;
-
+    
     usuarioId: string;
     Usuario?: UsuarioDTO;
 
@@ -25,9 +25,23 @@ export interface PostOcorrencia {
     lat: number;
     long: number;
     status: boolean;
-
+    
     usuarioId: string;
     Usuario?: UsuarioDTO;
+
+    imagens?: object;
+
+    Administradores?: AdministradorDTO[];
+}
+
+export interface PutOcorrencia {
+    id: string;
+    descricao: string;
+    tipo: string;
+    data: Date;
+    lat: number;
+    long: number;
+    status: boolean;
 
     imagens?: object;
 

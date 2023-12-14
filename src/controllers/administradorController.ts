@@ -38,8 +38,8 @@ const buscarAdministradorPorEmail = async (req: Request, res: Response) => {
 }
 
 const editarAdministrador = async (req: Request, res: Response) => {
-    const { id, nome, cpf, senha, cargo } = req.body;
-    const { email } = req.params;
+    const { email, nome, cpf, senha, cargo } = req.body;
+    const { id } = req.params;
 
     const administradorAtualizado = await administradorService.editarAdministrador({id, nome, cpf, senha, cargo, email: email as string});
 
