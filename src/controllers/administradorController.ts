@@ -29,10 +29,10 @@ const buscarTodosAdministradores = async (req: Request, res: Response) => {
     return res.status(200).send(administradores);
 }
 
-const buscarAdministradorPorEmail = async (req: Request, res: Response) => {
-    const { email } = req.params;
+const buscarAdministradorPorId = async (req: Request, res: Response) => {
+    const { id } = req.params;
 
-    const administrador = await administradorService.buscarAdministradorPorEmail(email as string);
+    const administrador = await administradorService.buscarAdministradorPorId(id as string);
 
     return res.status(200).send(administrador);
 }
@@ -51,9 +51,9 @@ const editarAdministrador = async (req: Request, res: Response) => {
 }
 
 const deletarAdministrador = async (req: Request, res: Response) => {
-    const { email } = req.params;
+    const { id } = req.params;
 
-    const administradorDeletado = await administradorService.deletarAdministrador(email as string);
+    const administradorDeletado = await administradorService.deletarAdministrador(id as string);
 
     if(!administradorDeletado){
         return res.status(400).send("Erro ao tentar deletar o administrador");
@@ -64,7 +64,7 @@ const deletarAdministrador = async (req: Request, res: Response) => {
 
 export const administradorController = {
     buscarTodosAdministradores,
-    buscarAdministradorPorEmail,
+    buscarAdministradorPorId,
     criarAdministrador,
     editarAdministrador,
     deletarAdministrador,

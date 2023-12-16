@@ -9,8 +9,8 @@ router.post("/", usuarioController.criarUsuario);
 router.use(autenticacao);
 
 router.get("/", usuarioController.buscarTodosUsuarios);
-router.get("/:email", usuarioExiste, usuarioController.buscarUsuarioPorEmail);
+router.get("/:id", usuarioExiste, usuarioController.buscarUsuarioPorId);
 router.put("/:id", usuarioController.editarUsuario);
-router.delete("/:email", usuarioController.deletarUsuario);
+router.delete("/:id", usuarioController.deletarUsuario);
 
 export default router;

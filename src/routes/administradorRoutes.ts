@@ -8,8 +8,8 @@ router.post("/", administradorController.criarAdministrador);
 router.use(autenticacao);
 
 router.get("/", administradorController.buscarTodosAdministradores);
-router.get("/:email", administradorController.buscarAdministradorPorEmail);
+router.get("/:id", administradorController.buscarAdministradorPorId);
 router.put("/:id", administradorController.editarAdministrador);
-router.delete("/:email", administradorController.deletarAdministrador);
+router.delete("/:id", administradorController.deletarAdministrador);
 
 export default router;

@@ -3,7 +3,7 @@ import { response as res } from "express";
 import { PrismaClient } from "@prisma/client";
 import { validacaoUsuarioYup } from "../utils/validacaoUsuarioYup";
 
-const {hash} = require("bcryptjs");
+const { hash } = require("bcryptjs");
 
 const prisma = new PrismaClient();
 
@@ -20,11 +20,11 @@ const usuarioExiste = async (email: string) => {
 const criarUsuario = async (usuario: UsuarioDTO) => {
     const validacaoDeErros = await validacaoUsuarioYup(usuario);
 
-    if(validacaoDeErros){
-        return {message: [...validacaoDeErros.errors], statusCode: 400};
+    if (validacaoDeErros) {
+        return { message: [...validacaoDeErros.errors], statusCode: 400 };
     }
 
-    if(await usuarioExiste(usuario.email)){
+    if (await usuarioExiste(usuario.email)) {
         return res.status(400).send("Usuário já existe no nosso sistema!");
     }
 
@@ -40,7 +40,7 @@ const criarUsuario = async (usuario: UsuarioDTO) => {
             }
         })
 
-        if(!novoUsuario){
+        if (!novoUsuario) {
             throw new Error('Usuario não foi cadastrado!');
         }
 
@@ -54,14 +54,20 @@ const buscarTodosUsuarios = async () => {
     return await prisma.usuario.findMany();
 }
 
-const buscarUsuarioPorEmail = async (email: string) => {
-    const usuario = await prisma.usuario.findUnique({
-        where: {
-            email,
-        }
-    })
+const buscarUsuarioPorId = async (id: string) => {
+    try {
+        const usuario = await prisma.usuario.findUnique({
+            where: {
+                id: id,
+            }
+        })
+        return usuario;
 
-    return usuario;
+    } catch (error) {
+        throw new Error('Erro ao tentar buscar usuário por id!');
+    }
+
+
 }
 
 const editarUsuario = async (usuario: UsuarioDTO) => {
@@ -77,23 +83,23 @@ const editarUsuario = async (usuario: UsuarioDTO) => {
         }
     })
 
-    if(!usuarioAtualizado){
+    if (!usuarioAtualizado) {
         throw new Error("Erro ao atualizar o usuário!");
     }
 
     return usuarioAtualizado;
 }
 
-const deletarUsuario = async (email: string) => {
-    const usuario = await buscarUsuarioPorEmail(email);
+const deletarUsuario = async (id: string) => {
+    const usuario = await buscarUsuarioPorId(id);
 
-    if(!usuario){
+    if (!usuario) {
         throw new Error("Usuário não encontrado!");
     }
 
     const usuarioDeletado = await prisma.usuario.delete({
         where: {
-            email: email,
+            id: id,
         }
     })
 
@@ -104,7 +110,7 @@ export const usuarioService = {
     usuarioExiste,
     criarUsuario,
     buscarTodosUsuarios,
-    buscarUsuarioPorEmail,
+    buscarUsuarioPorId,
     editarUsuario,
     deletarUsuario,
 }

@@ -54,17 +54,17 @@ const buscarTodosAdministradores = async () => {
     }
 }
 
-const buscarAdministradorPorEmail = async (email: string) => {
+const buscarAdministradorPorId = async (id: string) => {
     try {
         const administrador = await prisma.administrador.findUnique({
             where: {
-                email: email,
+                id: id,
             }
         })
 
         return administrador;
     } catch (error) {
-        throw new Error('Erro ao tentar buscar administrador por email!');
+        throw new Error('Erro ao tentar buscar administrador por id!');
     }
 }
 
@@ -92,11 +92,11 @@ const editarAdministrador = async (administrador: AdministradorDTO) => {
     }
 }
 
-const deletarAdministrador = async (email: string) => {
+const deletarAdministrador = async (id: string) => {
     try {
         const administradorDeletado = await prisma.administrador.delete({
             where: {
-                email,
+                id: id,
             }
         })
 
@@ -109,7 +109,7 @@ const deletarAdministrador = async (email: string) => {
 export const administradorService = {
     administradorExiste,
     buscarTodosAdministradores,
-    buscarAdministradorPorEmail,
+    buscarAdministradorPorId,
     criarAdministrador,
     editarAdministrador,
     deletarAdministrador,

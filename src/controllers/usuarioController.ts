@@ -27,9 +27,9 @@ const buscarTodosUsuarios = async (req: Request, res: Response) => {
     return res.json(usuarios);
 }
 
-const buscarUsuarioPorEmail = async (req: Request, res: Response) => {
-    const { email } = req.params;
-    const usuario = await usuarioService.buscarUsuarioPorEmail(email as string);
+const buscarUsuarioPorId = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const usuario = await usuarioService.buscarUsuarioPorId(id as string);
     return res.status(200).json(usuario);
 }
 
@@ -47,9 +47,9 @@ const editarUsuario = async (req: Request, res: Response) => {
 }
 
 const deletarUsuario = async (req: Request, res: Response) => {
-    const { email } = req.params;
+    const { id } = req.params;
 
-    const usuarioDeletado = await usuarioService.deletarUsuario(email as string);
+    const usuarioDeletado = await usuarioService.deletarUsuario(id as string);
     
     if(!usuarioDeletado){
         return res.status(400).send("Erro ao deletar o usuário!");
@@ -60,7 +60,7 @@ const deletarUsuario = async (req: Request, res: Response) => {
 
 export const usuarioController = {
     buscarTodosUsuarios,
-    buscarUsuarioPorEmail,
+    buscarUsuarioPorId,
     criarUsuario,
     editarUsuario,
     deletarUsuario,
